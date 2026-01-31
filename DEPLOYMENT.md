@@ -34,6 +34,19 @@ In **Cloudflare Pages** → your project → **Settings** → **Builds & deploym
 | **Root directory** | (leave blank if repo root is the app) |
 | **Environment variables** | Add all vars from `.env.example` (see below) |
 
+## Compatibility flags (required for next-on-pages)
+
+If you see **"Node.JS Compatibility Error – no nodejs_compat compatibility flag set"**:
+
+1. **Cloudflare Dashboard** → **Workers & Pages** → your **Pages** project.
+2. Go to **Settings** → **Compatibility flags** (under "Build configuration" or "Functions").
+3. Under **Compatibility flags**, add:
+   - **Flag:** `nodejs_compat`
+   - Enable it for **Production** and **Preview**.
+4. Save. Redeploy (e.g. **Deployments** → **Retry deployment** or push a commit).
+
+Without this flag, the Next.js app built with `@cloudflare/next-on-pages` cannot run on Cloudflare Pages.
+
 ## Environment variables
 
 In **Settings** → **Environment variables**, add for **Production** (and Preview if desired):
