@@ -83,7 +83,14 @@ export default function MeetingRequestPage() {
 
       <footer className="relative border-t border-white/[0.08] py-6 mt-8">
         <p className="text-center text-sm text-zinc-500">
-          infoendeavorconnect.com
+          <a
+            href="https://lp.infoendeavorconnect.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 hover:text-crypto-cyan transition-colors"
+          >
+            lp.infoendeavorconnect.com
+          </a>
         </p>
       </footer>
     </div>

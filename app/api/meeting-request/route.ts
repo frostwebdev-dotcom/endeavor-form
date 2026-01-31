@@ -42,7 +42,7 @@ function validateBody(body: unknown): { ok: true; data: Body } | { ok: false; er
 
 function buildEmailBody(data: Body): string {
   const lines: string[] = [
-    "New Meeting Request - infoendeavorconnect.com",
+    "New Meeting Request - lp.infoendeavorconnect.com",
     "",
     "---",
     "",
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
       personalizations: [{ to: [{ email: notifyTo }] }],
       from: { email: fromEmail, name: "Endeavor Connect" },
       reply_to: { email: replyTo },
-      subject: "New Meeting Request - infoendeavorconnect.com",
+      subject: "New Meeting Request - lp.infoendeavorconnect.com",
       content: [{ type: "text/plain", value: emailBody }],
     }),
   });
