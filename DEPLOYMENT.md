@@ -1,5 +1,27 @@
 # Cloudflare Pages deployment (next-on-pages)
 
+## Fix: npm install fails (ERESOLVE / peer dependency)
+
+Cloudflare runs `npm install` without your local `.npmrc`. Do **both** of the following:
+
+1. **Commit `.npmrc`** in the repo (it contains `legacy-peer-deps=true`). If you haven’t pushed it yet:
+   ```bash
+   git add .npmrc
+   git commit -m "Add .npmrc for Cloudflare build"
+   git push
+   ```
+
+2. **Set a build-time env var** in Cloudflare so install uses legacy peer deps even if `.npmrc` is missing:
+   - **Cloudflare Dashboard** → your **Pages** project → **Settings** → **Environment variables**
+   - **Add variable** (for **Production** and/or **Preview**):
+     - **Variable name:** `NPM_CONFIG_LEGACY_PEER_DEPS`
+     - **Value:** `true`
+   - Save. Then trigger a new deploy (e.g. **Deployments** → **Retry deployment** or push a new commit).
+
+After this, `npm install` should succeed and the build can continue.
+
+---
+
 ## Build settings
 
 In **Cloudflare Pages** → your project → **Settings** → **Builds & deployments** → **Build configuration**:
@@ -41,8 +63,36 @@ In **Settings** → **Environment variables**, add for **Production** (and Previ
 
 ## SendGrid
 
-- Create an API key with “Mail Send” permission.  
-- Ensure `FROM_EMAIL` is a verified sender (or use a verified domain) in SendGrid.
+### Create an API key (Mail Send)
+
+1. **Log in** to [SendGrid](https://app.sendgrid.com/).
+2. Open **Settings** (gear icon in the left sidebar) → **API Keys**.
+3. Click **Create API Key**.
+4. **Name:** e.g. `Endeavor Meeting Request` (any label you like).
+5. **API Key Permissions:** choose **Restricted Access**.
+6. Under **Mail Send**, turn **ON** only:
+   - **Mail Send** → **Mail Send** (full access or “Send” is enough).
+7. Leave all other permissions (e.g. Mail Settings, Tracking) **OFF**.
+8. Click **Create & View**.
+9. **Copy the key immediately** — SendGrid shows it only once. It looks like:
+   ```text
+   SG.xxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ```
+10. Store it in your `.env` (see below). For Cloudflare Pages, add the same value in **Settings → Environment variables** as `SENDGRID_API_KEY`.
+
+**Add to `.env` (local):**
+
+```env
+SENDGRID_API_KEY=SG.xxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Replace the value with your actual key. No quotes needed. Do not commit `.env` to git.
+
+### Sender verification
+
+- The **From** address (`FROM_EMAIL`, e.g. `no-reply@infoendeavorconnect.com`) must be verified in SendGrid, or the domain must be authenticated.
+- In SendGrid: **Settings** → **Sender Authentication** → either verify a **Single Sender** (one email) or **Authenticate a domain** (allows any address on that domain).
+- Until one of these is done, SendGrid may block or reject sends.
 
 ## Local preview (optional)
 
