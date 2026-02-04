@@ -3,6 +3,11 @@
 import { useState, FormEvent, useCallback } from "react";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Phone: digits only, 10–15 length (allows international)
+function isValidPhone(value: string): boolean {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 10 && digits.length <= 15;
+}
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -95,6 +100,7 @@ export default function MeetingRequestForm() {
   const [alternativeTime, setAlternativeTime] = useState("");
   const [firmName, setFirmName] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
   const [submittedData, setSubmittedData] = useState<FormPayload | null>(null);
@@ -113,13 +119,31 @@ export default function MeetingRequestForm() {
     return true;
   }, []);
 
+  const validatePhone = useCallback((value: string): boolean => {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setPhoneError("");
+      return true;
+    }
+    if (!isValidPhone(trimmed)) {
+      setPhoneError("Please enter a valid phone number (e.g. 10–15 digits).");
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  }, []);
+
   const isEmailValid =
     preferredEmail.trim() !== "" && EMAIL_REGEX.test(preferredEmail.trim());
-  const canSubmit = isEmailValid && formState !== "submitting";
+  const hasPhone = preferredPhone.trim() !== "";
+  const isPhoneValid = !hasPhone || isValidPhone(preferredPhone.trim());
+  const canSubmit =
+    isEmailValid && isPhoneValid && formState !== "submitting";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateEmail(preferredEmail) || formState === "submitting") return;
+    if (hasPhone && !validatePhone(preferredPhone)) return;
 
     setFormState("submitting");
     setMessage("");
@@ -163,6 +187,7 @@ export default function MeetingRequestForm() {
       setAlternativeTime("");
       setFirmName("");
       setEmailError("");
+      setPhoneError("");
     } catch {
       setFormState("error");
       setMessage(
@@ -174,20 +199,20 @@ export default function MeetingRequestForm() {
   const isSubmitting = formState === "submitting";
 
   const inputBase =
-    "w-full min-h-[44px] sm:min-h-[48px] px-4 py-3 rounded-xl border border-white/[0.12] bg-white/[0.05] text-white placeholder:text-zinc-500 focus:border-crypto-cyan/60 focus:ring-2 focus:ring-crypto-cyan/20 focus:bg-white/[0.08] disabled:opacity-60 transition-all duration-200 text-base";
+    "w-full min-h-[44px] sm:min-h-[48px] px-4 py-3 rounded-xl border border-zinc-200 dark:border-white/[0.12] bg-white dark:bg-white/[0.05] text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:border-crypto-cyan/60 focus:ring-2 focus:ring-crypto-cyan/20 focus:bg-white dark:focus:bg-white/[0.08] disabled:opacity-60 transition-all duration-200 text-base";
   const inputErrorClass =
     "border-red-400 focus:border-red-400 focus:ring-red-400/30";
 
   return (
     <section
       id="form"
-      className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm overflow-hidden shadow-glow"
+      className="rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] backdrop-blur-sm overflow-hidden shadow-card dark:shadow-glow transition-colors duration-200"
       aria-labelledby="form-title"
     >
       <div className="p-6 sm:p-8 lg:p-10">
         <h2
           id="form-title"
-          className="text-xl sm:text-2xl font-bold text-white mb-6"
+          className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white mb-6"
         >
           Get In Touch
         </h2>
@@ -198,22 +223,22 @@ export default function MeetingRequestForm() {
             aria-live="polite"
             className="space-y-4"
           >
-            <p className="text-zinc-300 text-base sm:text-lg leading-relaxed">
+            <p className="text-zinc-600 dark:text-zinc-300 text-base sm:text-lg leading-relaxed">
               {message}
             </p>
             {submittedData && (
               <div
-                className="p-4 rounded-xl bg-white/[0.05] border border-white/[0.08] text-sm text-zinc-300 space-y-1"
+                className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.05] border border-zinc-200 dark:border-white/[0.08] text-sm text-zinc-700 dark:text-zinc-300 space-y-1"
                 aria-label="Summary of your submission"
               >
-                <p className="font-medium text-white mb-2">Summary</p>
+                <p className="font-medium text-zinc-900 dark:text-white mb-2">Summary</p>
                 <p>
-                  <span className="text-zinc-500">Email:</span>{" "}
+                  <span className="text-zinc-500 dark:text-zinc-500">Email:</span>{" "}
                   {submittedData.preferredEmail}
                 </p>
                 {submittedData.preferredPhone && (
                   <p>
-                    <span className="text-zinc-500">Phone:</span>{" "}
+                    <span className="text-zinc-500 dark:text-zinc-500">Phone:</span>{" "}
                     {submittedData.preferredPhone}
                   </p>
                 )}
@@ -256,7 +281,7 @@ export default function MeetingRequestForm() {
             {formState === "error" && (
               <div
                 role="alert"
-                className="p-4 rounded-xl bg-red-500/10 border border-red-400/30 text-red-300 text-sm"
+                className="p-4 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-400/30 text-red-700 dark:text-red-300 text-sm"
                 aria-live="assertive"
               >
                 {message}
@@ -268,7 +293,7 @@ export default function MeetingRequestForm() {
               <div>
                 <label
                   htmlFor="preferredEmail"
-                  className="block text-sm font-medium text-zinc-300 mb-1.5"
+                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                 >
                   Preferred Email <span className="text-red-400" aria-hidden>*</span>
                 </label>
@@ -303,7 +328,7 @@ export default function MeetingRequestForm() {
               <div>
                 <label
                   htmlFor="preferredPhone"
-                  className="block text-sm font-medium text-zinc-300 mb-1.5"
+                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
                 >
                   Preferred Phone
                 </label>
@@ -311,25 +336,40 @@ export default function MeetingRequestForm() {
                   id="preferredPhone"
                   type="tel"
                   value={preferredPhone}
-                  onChange={(e) => setPreferredPhone(e.target.value)}
+                  onChange={(e) => {
+                    setPreferredPhone(e.target.value);
+                    if (phoneError) validatePhone(e.target.value);
+                  }}
+                  onBlur={() => preferredPhone && validatePhone(preferredPhone)}
                   placeholder="e.g. (555) 123-4567"
                   disabled={isSubmitting}
-                  className={inputBase}
+                  className={`${inputBase} ${phoneError ? inputErrorClass : ""}`}
                   autoComplete="tel"
+                  aria-invalid={!!phoneError}
+                  aria-describedby={phoneError ? "phone-error" : undefined}
                 />
+                {phoneError && (
+                  <p
+                    id="phone-error"
+                    className="mt-1.5 text-sm text-red-400 font-medium"
+                    role="alert"
+                  >
+                    {phoneError}
+                  </p>
+                )}
               </div>
             </div>
 
             {/* Preferred Date + Time */}
             <div>
               <fieldset className="space-y-2">
-                <legend className="block text-sm font-medium text-zinc-300 mb-1.5">
+                <legend className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                   Preferred Date & Time
                 </legend>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
                     <span
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none"
                       aria-hidden
                     >
                       <CalendarIcon />
@@ -346,7 +386,7 @@ export default function MeetingRequestForm() {
                   </div>
                   <div className="relative">
                     <span
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none"
                       aria-hidden
                     >
                       <ClockIcon />
@@ -368,13 +408,13 @@ export default function MeetingRequestForm() {
             {/* Alternative Date + Time */}
             <div>
               <fieldset className="space-y-2">
-                <legend className="block text-sm font-medium text-zinc-300 mb-1.5">
+                <legend className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
                   Alternative Date & Time
                 </legend>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
                     <span
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none"
                       aria-hidden
                     >
                       <CalendarIcon />
@@ -391,7 +431,7 @@ export default function MeetingRequestForm() {
                   </div>
                   <div className="relative">
                     <span
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500 pointer-events-none"
                       aria-hidden
                     >
                       <ClockIcon />
@@ -412,10 +452,10 @@ export default function MeetingRequestForm() {
 
             {/* Firm Name */}
             <div>
-              <label
-                htmlFor="firmName"
-                className="block text-sm font-medium text-zinc-300 mb-1.5"
-              >
+                <label
+                  htmlFor="firmName"
+                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
+                >
                 Firm Name
               </label>
               <input
@@ -435,7 +475,7 @@ export default function MeetingRequestForm() {
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className="w-full min-h-[48px] sm:min-h-[52px] py-3 px-6 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-[#0a0a0f] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-glow hover:shadow-glow-lg text-base"
+                className="w-full min-h-[48px] sm:min-h-[52px] py-3 px-6 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-glow hover:shadow-glow-lg text-base"
                 aria-busy={isSubmitting}
                 aria-disabled={!canSubmit}
               >

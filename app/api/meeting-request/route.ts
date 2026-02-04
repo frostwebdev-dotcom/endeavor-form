@@ -3,6 +3,11 @@ import { NextRequest } from "next/server";
 export const runtime = "edge";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Phone: 10–15 digits (after stripping non-digits)
+function isValidPhone(value: string): boolean {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 10 && digits.length <= 15;
+}
 
 type Body = {
   preferredEmail?: string;
@@ -26,11 +31,15 @@ function validateBody(body: unknown): { ok: true; data: Body } | { ok: false; er
   if (!EMAIL_REGEX.test(email)) {
     return { ok: false, error: "preferredEmail must be a valid email address." };
   }
+  const phone = typeof b.preferredPhone === "string" ? b.preferredPhone.trim() : "";
+  if (phone && !isValidPhone(phone)) {
+    return { ok: false, error: "preferredPhone must be a valid phone number (10–15 digits)." };
+  }
   return {
     ok: true,
     data: {
       preferredEmail: email,
-      preferredPhone: typeof b.preferredPhone === "string" ? b.preferredPhone.trim() : undefined,
+      preferredPhone: phone || undefined,
       preferredDate: typeof b.preferredDate === "string" ? b.preferredDate.trim() : undefined,
       preferredTime: typeof b.preferredTime === "string" ? b.preferredTime.trim() : undefined,
       alternativeDate: typeof b.alternativeDate === "string" ? b.alternativeDate.trim() : undefined,
@@ -55,6 +64,45 @@ function buildEmailBody(data: Body): string {
     "Firm name: " + (data.firmName || "(not provided)"),
     "",
     "---",
+  ];
+  return lines.join("\r\n");
+}
+
+function buildThankYouEmailBody(data: Body): string {
+  const firstPart = data.preferredEmail?.split("@")[0] ?? "";
+  const firstNameOrThere =
+    firstPart.length > 0
+      ? firstPart.charAt(0).toUpperCase() + firstPart.slice(1).toLowerCase()
+      : "there";
+  const preferredPhoneOrDash = data.preferredPhone?.trim() || "—";
+  const preferredDateTime =
+    [data.preferredDate, data.preferredTime].filter(Boolean).join(" at ") || "—";
+  const alternativeDateTime =
+    [data.alternativeDate, data.alternativeTime].filter(Boolean).join(" at ") || "—";
+  const firmNameOrDash = data.firmName?.trim() || "—";
+
+  const lines: string[] = [
+    "Hello " + firstNameOrThere + ",",
+    "",
+    "Thank you for contacting Endeavor Search Partners. Your meeting request has been received, and a member of our team will follow up shortly to confirm scheduling.",
+    "",
+    "For your reference, here is what we received:",
+    "",
+    "Email: " + data.preferredEmail,
+    "",
+    "Phone: " + preferredPhoneOrDash,
+    "",
+    "Preferred date/time: " + preferredDateTime,
+    "",
+    "Alternative date/time: " + alternativeDateTime,
+    "",
+    "Firm: " + firmNameOrDash,
+    "",
+    "For questions, please reply to this email or contact us at hello@infoendeavorconnect.com.",
+    "",
+    "Sincerely,",
+    "Endeavor Search Partners",
+    "infoendeavorconnect.com",
   ];
   return lines.join("\r\n");
 }
@@ -156,11 +204,40 @@ export async function POST(request: NextRequest) {
 
   if (!sendgridRes.ok) {
     const errText = await sendgridRes.text();
-    console.error("SendGrid failed:", sendgridRes.status, errText);
+    console.error("SendGrid (admin) failed:", sendgridRes.status, errText);
     return Response.json(
       {
         error:
           "Your request was saved but we couldn't send a notification. We'll still get in touch.",
+      },
+      { status: 500 }
+    );
+  }
+
+  // Thank-you email to the user (from no-reply@...)
+  const thankYouBody = buildThankYouEmailBody(data);
+  const thankYouRes = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sendgridKey}`,
+    },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: data.preferredEmail }] }],
+      from: { email: fromEmail, name: "Endeavor Search Partners" },
+      reply_to: { email: replyTo },
+      subject: "Confirmation — meeting request received",
+      content: [{ type: "text/plain", value: thankYouBody }],
+    }),
+  });
+
+  if (!thankYouRes.ok) {
+    const errText = await thankYouRes.text();
+    console.error("SendGrid (thank-you) failed:", thankYouRes.status, errText);
+    return Response.json(
+      {
+        error:
+          "Your request was saved but we couldn't send your confirmation email. We'll still be in touch.",
       },
       { status: 500 }
     );

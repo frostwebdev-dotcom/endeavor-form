@@ -2,27 +2,38 @@
 
 import HeroPanel from "@/components/HeroPanel";
 import MeetingRequestForm from "@/components/MeetingRequestForm";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 export default function MeetingRequestPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0f] bg-grid-dark bg-grid overflow-x-hidden relative">
-      {/* Subtle gradient glow at top */}
+    <div className="min-h-screen bg-surface-warm dark:bg-[#0a0a0f] bg-grid-pattern dark:bg-grid-dark bg-grid overflow-x-hidden relative transition-colors duration-200">
+      {/* Subtle gradient glow at top (dark only) */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-glow opacity-100"
+        className="pointer-events-none absolute inset-0 bg-gradient-glow opacity-100 dark:opacity-100 opacity-0"
         aria-hidden
       />
 
       {/* Header - glass navbar */}
-      <header className="sticky top-0 z-20 border-b border-white/[0.08] bg-[#0a0a0f]/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-20 border-b border-zinc-200/80 dark:border-white/[0.08] bg-white/90 dark:bg-[#0a0a0f]/80 backdrop-blur-xl transition-colors duration-200">
         <div className="mx-auto max-w-content px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 lg:gap-8">
-              <span className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                Endeavor Search Partners
-              </span>
+              <a
+                href="https://lp.infoendeavorconnect.com/"
+                className="flex items-center min-h-[44px] focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] rounded-lg"
+                aria-label="Endeavor Search Partners - Home"
+              >
+                <img
+                  src="/endeavor-logo.png"
+                  alt="Endeavor Search Partners"
+                  className="h-8 sm:h-9 w-auto object-contain"
+                  width={180}
+                  height={36}
+                />
+              </a>
               <a
                 href="mailto:hello@infoendeavorconnect.com"
-                className="flex items-center gap-2 min-h-[44px] text-sm text-zinc-400 hover:text-crypto-cyan transition-colors focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-[#0a0a0f] rounded-lg px-2 -mx-2"
+                className="flex items-center gap-2 min-h-[44px] text-sm text-zinc-600 dark:text-zinc-400 hover:text-crypto-cyan transition-colors focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] rounded-lg px-2 -mx-2"
                 aria-label="Email hello@infoendeavorconnect.com"
               >
                 <svg
@@ -43,7 +54,7 @@ export default function MeetingRequestPage() {
               </a>
               <a
                 href="tel:+16092000245"
-                className="flex items-center gap-2 min-h-[44px] text-sm text-zinc-400 hover:text-crypto-cyan transition-colors focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-[#0a0a0f] rounded-lg px-2 -mx-2"
+                className="flex items-center gap-2 min-h-[44px] text-sm text-zinc-600 dark:text-zinc-400 hover:text-crypto-cyan transition-colors focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] rounded-lg px-2 -mx-2"
                 aria-label="Call 609-200-0245"
               >
                 <svg
@@ -63,12 +74,15 @@ export default function MeetingRequestPage() {
                 <span className="font-medium">609-200-0245</span>
               </a>
             </div>
-            <a
-              href="#form"
-              className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-[#0a0a0f] transition-all duration-200 shadow-glow hover:shadow-glow-lg"
-            >
-              Schedule an Appointment
-            </a>
+            <div className="flex items-center gap-2">
+              <ThemeSwitcher />
+              <a
+                href="#form"
+                className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] transition-all duration-200 shadow-glow hover:shadow-glow-lg"
+              >
+                Schedule an Appointment
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -81,13 +95,13 @@ export default function MeetingRequestPage() {
         </div>
       </main>
 
-      <footer className="relative border-t border-white/[0.08] py-6 mt-8">
+      <footer className="relative border-t border-zinc-200/80 dark:border-white/[0.08] py-6 mt-8 transition-colors duration-200">
         <p className="text-center text-sm text-zinc-500">
           <a
             href="https://lp.infoendeavorconnect.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-zinc-400 hover:text-crypto-cyan transition-colors"
+            className="text-zinc-500 dark:text-zinc-400 hover:text-crypto-cyan transition-colors"
           >
             lp.infoendeavorconnect.com
           </a>
