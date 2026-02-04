@@ -24,7 +24,7 @@ export default function MeetingRequestPage() {
                 aria-label="Endeavor Search Partners - Home"
               >
                 <img
-                  src="/endeavor-logo.png"
+                  src="/Endeavor-logo.png"
                   alt="Endeavor Search Partners"
                   className="h-8 sm:h-9 w-auto object-contain"
                   width={180}
