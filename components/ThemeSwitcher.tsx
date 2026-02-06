@@ -57,7 +57,7 @@ export default function ThemeSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 py-1.5 min-w-[120px] rounded-lg border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-900 shadow-lg z-50"
+          className="absolute right-0 top-full mt-2 py-1.5 min-w-[128px] rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-zinc-800/95 shadow-xl z-50"
           role="menu"
           aria-label="Theme options"
         >
@@ -65,18 +65,19 @@ export default function ThemeSwitcher() {
             <button
               key={opt.value}
               type="button"
-              role="menuitem"
+              role="menuitemradio"
+              aria-checked={theme === opt.value}
               onClick={() => {
                 setTheme(opt.value);
                 setOpen(false);
               }}
-              className="w-full flex items-center gap-2 px-4 py-2 text-left text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors first:rounded-t-xl last:rounded-b-xl"
             >
               <span
-                className={`w-2 h-2 rounded-full shrink-0 ${
+                className={`w-3.5 h-3.5 rounded-full shrink-0 flex items-center justify-center ${
                   theme === opt.value
-                    ? "bg-crypto-cyan"
-                    : "bg-transparent border border-zinc-300 dark:border-zinc-600"
+                    ? "bg-zinc-400 dark:bg-zinc-500 ring-2 ring-zinc-400/30 dark:ring-white/20"
+                    : "bg-transparent border-2 border-zinc-300 dark:border-zinc-500"
                 }`}
                 aria-hidden
               />

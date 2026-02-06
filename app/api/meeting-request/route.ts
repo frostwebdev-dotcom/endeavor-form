@@ -61,7 +61,7 @@ function buildEmailBody(data: Body): string {
     "Preferred time: " + (data.preferredTime || "(not provided)"),
     "Alternative date: " + (data.alternativeDate || "(not provided)"),
     "Alternative time: " + (data.alternativeTime || "(not provided)"),
-    "Firm name: " + (data.firmName || "(not provided)"),
+    "Name: " + (data.firmName || "(not provided)"),
     "",
     "---",
   ];
@@ -96,7 +96,7 @@ function buildThankYouEmailBody(data: Body): string {
     "",
     "Alternative date/time: " + alternativeDateTime,
     "",
-    "Firm: " + firmNameOrDash,
+    "Name: " + firmNameOrDash,
     "",
     "For questions, please reply to this email or contact us at hello@infoendeavorconnect.com.",
     "",

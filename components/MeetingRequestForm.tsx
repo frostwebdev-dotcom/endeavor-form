@@ -264,7 +264,7 @@ export default function MeetingRequestForm() {
                 )}
                 {submittedData.firmName && (
                   <p>
-                    <span className="text-zinc-500">Firm:</span>{" "}
+                    <span className="text-zinc-500 dark:text-zinc-500">Name:</span>{" "}
                     {submittedData.firmName}
                   </p>
                 )}
@@ -450,20 +450,20 @@ export default function MeetingRequestForm() {
               </fieldset>
             </div>
 
-            {/* Firm Name */}
+            {/* Name */}
             <div>
-                <label
-                  htmlFor="firmName"
-                  className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
-                >
-                Firm Name
+              <label
+                htmlFor="firmName"
+                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5"
+              >
+                Name
               </label>
               <input
                 id="firmName"
                 type="text"
                 value={firmName}
                 onChange={(e) => setFirmName(e.target.value)}
-                placeholder="e.g. Explore meeting with LPL Financial"
+                placeholder="e.g. Your name"
                 disabled={isSubmitting}
                 className={inputBase}
                 autoComplete="organization"
