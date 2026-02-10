@@ -57,6 +57,13 @@ In **Settings** → **Environment variables**, add for **Production** (and Previ
 - `NOTIFY_EMAIL_TO` – e.g. `hello@infoendeavorconnect.com`  
 - `FROM_EMAIL` – e.g. `no-reply@infoendeavorconnect.com`  
 - `REPLY_TO_EMAIL` – e.g. `hello@infoendeavorconnect.com`  
+- `ADMIN_SECRET` – secret for `/admin` dashboard (view meeting requests); keep strong and private  
+
+## Admin dashboard
+
+- **URL:** `/admin` (e.g. `https://your-site.pages.dev/admin`).
+- **Auth:** Sign in with the value of `ADMIN_SECRET`. Stored in session only (cleared on sign out or when the tab is closed).
+- **Features:** View all meeting requests (email, phone, dates, times, name, submitted at). New submissions since the page was opened are highlighted and trigger an audible notification. Data auto-refreshes every 20 seconds.
 
 ## Supabase setup
 
