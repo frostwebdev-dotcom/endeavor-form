@@ -7,9 +7,14 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 export default function MeetingRequestPage() {
   return (
     <div className="min-h-screen bg-surface-warm dark:bg-[#0a0a0f] bg-grid-pattern dark:bg-grid-dark bg-grid overflow-x-hidden relative transition-colors duration-200">
-      {/* Subtle gradient glow at top (dark only) */}
+      {/* Subtle gradient glow at top (dark only) - gentle breathe */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-glow opacity-100 dark:opacity-100 opacity-0"
+        className="pointer-events-none absolute inset-0 bg-gradient-glow opacity-0 dark:opacity-100 animate-bg-glow-breathe"
+        aria-hidden
+      />
+      {/* Soft drifting orbs - dark only, customer-friendly ambient motion */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-drift-layer opacity-0 dark:opacity-100 animate-bg-gradient-drift"
         aria-hidden
       />
 
@@ -81,7 +86,7 @@ export default function MeetingRequestPage() {
               <ThemeSwitcher />
               <a
                 href="#form"
-                className="min-h-[44px] inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] transition-all duration-200 shadow-glow hover:shadow-glow-lg whitespace-nowrap"
+                className="min-h-[44px] inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-cta hover:opacity-90 hover:scale-[1.02] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] transition-all duration-200 shadow-glow hover:shadow-glow-lg whitespace-nowrap"
               >
                 <span className="sm:hidden">Schedule</span>
                 <span className="hidden sm:inline">Schedule an Appointment</span>

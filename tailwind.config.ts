@@ -83,6 +83,21 @@ const config: Config = {
       backdropBlur: {
         xs: "2px",
       },
+      keyframes: {
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(14px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        "fade-in-up": "fade-in-up 0.55s ease-out forwards",
+        "fade-in-up-slow": "fade-in-up 0.65s ease-out forwards",
+        "fade-in": "fade-in 0.4s ease-out forwards",
+      },
     },
   },
   plugins: [],

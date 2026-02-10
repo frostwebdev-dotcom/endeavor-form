@@ -13,20 +13,20 @@ export default function HeroPanel() {
       <div className="relative z-10 max-w-readable">
         <h1
           id="hero-headline"
-          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white leading-tight tracking-tight"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-white leading-tight tracking-tight opacity-0 animate-fade-in-up [animation-delay:0ms] [animation-fill-mode:forwards]"
         >
           Navigate Your Career with{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-crypto-cyan to-crypto-blue">
             Confidence.
           </span>
         </h1>
-        <p className="mt-4 sm:mt-5 text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        <p className="mt-4 sm:mt-5 text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed opacity-0 animate-fade-in-up [animation-delay:100ms] [animation-fill-mode:forwards]">
           We are your advocates, guiding you through the most important
           decisions of your career. Let us connect you with opportunities that
           align with your vision and values.
         </p>
         <ul
-          className="mt-6 sm:mt-8 space-y-3"
+          className="mt-6 sm:mt-8 space-y-3 opacity-0 animate-fade-in-up [animation-delay:200ms] [animation-fill-mode:forwards]"
           aria-label="Why work with us"
         >
           {bullets.map((label, i) => (

@@ -206,7 +206,7 @@ export default function MeetingRequestForm() {
   return (
     <section
       id="form"
-      className="rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] backdrop-blur-sm overflow-hidden shadow-card dark:shadow-glow transition-colors duration-200"
+      className="rounded-2xl sm:rounded-3xl border border-zinc-200/80 dark:border-white/[0.08] bg-white dark:bg-white/[0.03] backdrop-blur-sm overflow-hidden shadow-card dark:shadow-glow transition-all duration-300 opacity-0 animate-fade-in-up-slow [animation-delay:180ms] [animation-fill-mode:forwards] hover:shadow-card hover:dark:shadow-glow-lg"
       aria-labelledby="form-title"
     >
       <div className="p-6 sm:p-8 lg:p-10">
@@ -475,7 +475,7 @@ export default function MeetingRequestForm() {
               <button
                 type="submit"
                 disabled={!canSubmit}
-                className="w-full min-h-[48px] sm:min-h-[52px] py-3 px-6 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200 shadow-glow hover:shadow-glow-lg text-base"
+                className="w-full min-h-[48px] sm:min-h-[52px] py-3 px-6 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 hover:scale-[1.02] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-crypto-cyan focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0a0f] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 shadow-glow hover:shadow-glow-lg text-base"
                 aria-busy={isSubmitting}
                 aria-disabled={!canSubmit}
               >
