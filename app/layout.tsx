@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Get In Touch | Endeavor Search Partners",
   description:
     "Request a meeting with Endeavor Search Partners. We'd love to hear from you.",
+  icons: {
+    icon: { url: "/favicon.svg", type: "image/svg+xml" },
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
