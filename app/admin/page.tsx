@@ -250,11 +250,15 @@ export default function AdminDashboardPage() {
 
         const currentIds = new Set(list.map((r) => r.id));
         const prevSeen = seenIdsRef.current;
-        const newIds = [...currentIds].filter((id) => !prevSeen.has(id));
+        const newIds = Array.from(currentIds).filter((id) => !prevSeen.has(id));
 
         if (newIds.length > 0 && !isInitial) {
           playNotificationSound();
-          setHighlightIds((h) => new Set([...h, ...newIds]));
+          setHighlightIds((h) => {
+            const next = new Set(Array.from(h));
+            newIds.forEach((id) => next.add(id));
+            return next;
+          });
         }
 
         seenIdsRef.current = currentIds;
