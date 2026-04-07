@@ -347,7 +347,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-surface-warm dark:bg-[#0a0a0f] p-4">
         <div className="w-full max-w-sm rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-6 shadow-lg">
-          <h1 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+          <h1 className="font-serif text-xl font-semibold text-zinc-900 dark:text-white mb-2">
             Admin sign in
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
@@ -393,7 +393,7 @@ export default function AdminDashboardPage() {
       <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-white/10 bg-white/90 dark:bg-[#0a0a0f]/90 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-lg font-bold text-zinc-900 dark:text-white">
+            <h1 className="font-serif text-lg font-semibold text-zinc-900 dark:text-white">
               Admin — Meeting requests
             </h1>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">

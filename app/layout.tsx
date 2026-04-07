@@ -1,12 +1,25 @@
 import type { Metadata } from "next";
+import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { themeScript } from "./theme-script";
+
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
-  title: "Get In Touch | Endeavor Search Partners",
+  title: "Endeavor Search Partners | Executive search & career guidance",
   description:
-    "Request a meeting with Endeavor Search Partners. We'd love to hear from you.",
+    "Confidential career conversations and aligned opportunities. Schedule a meeting with Endeavor Search Partners—professional search and advisory for your next chapter.",
   icons: {
     icon: { url: "/favicon.svg", type: "image/svg+xml" },
     apple: "/favicon.svg",
@@ -19,15 +32,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{ __html: themeScript }}
-          suppressHydrationWarning
-        />
-      </head>
-      <body className="font-sans antialiased min-h-screen bg-surface-warm dark:bg-[#0a0a0f] text-zinc-800 dark:text-zinc-100 transition-colors duration-200">
-        <ThemeProvider>{children}</ThemeProvider>
+    <html
+      lang="en"
+      className={`dark ${sourceSans.variable} ${sourceSerif.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased min-h-screen bg-[#0a0a0f] text-zinc-100">
+        {children}
       </body>
     </html>
   );

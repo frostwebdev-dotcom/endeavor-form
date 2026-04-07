@@ -56,8 +56,19 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "Georgia", "serif"],
+        sans: [
+          "var(--font-sans)",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif",
+        ],
+        serif: [
+          "var(--font-serif)",
+          "Georgia",
+          "Times New Roman",
+          "serif",
+        ],
       },
       maxWidth: {
         content: "1200px",
