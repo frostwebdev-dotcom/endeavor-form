@@ -45,39 +45,39 @@ function DashTable({
 }) {
   if (rows.length === 0) {
     return (
-      <p className="text-zinc-500 dark:text-zinc-400 text-center py-12">
+      <p className="text-zinc-500 text-center py-12">
         No meeting requests yet.
       </p>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.03]">
+    <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="border-b border-zinc-200 dark:border-white/10 bg-zinc-50 dark:bg-zinc-900/50">
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+          <tr className="border-b border-zinc-200 bg-zinc-50">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Email
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Phone
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Preferred date
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Preferred time
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Alt. date
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Alt. time
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Name
             </th>
-            <th className="px-4 py-3 font-semibold text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+            <th className="px-4 py-3 font-semibold text-zinc-700 whitespace-nowrap">
               Submitted
             </th>
           </tr>
@@ -88,39 +88,39 @@ function DashTable({
             return (
               <tr
                 key={row.id}
-                className={`border-b border-zinc-100 dark:border-white/5 transition-colors ${
+                className={`border-b border-zinc-100 transition-colors ${
                   isNew
-                    ? "bg-crypto-cyan/10 dark:bg-crypto-cyan/15 border-l-4 border-l-crypto-cyan"
-                    : "bg-white dark:bg-transparent"
+                    ? "bg-brand-50 border-l-4 border-l-brand-600"
+                    : "bg-white"
                 }`}
               >
-                <td className="px-4 py-3 text-zinc-900 dark:text-white font-medium">
+                <td className="px-4 py-3 text-zinc-900 font-medium">
                   <a
                     href={`mailto:${row.preferred_email}`}
-                    className="text-crypto-cyan hover:underline"
+                    className="text-brand-700 hover:underline"
                   >
                     {row.preferred_email}
                   </a>
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-700 whitespace-nowrap">
                   {row.preferred_phone ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-700 whitespace-nowrap">
                   {row.preferred_date ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-700 whitespace-nowrap">
                   {row.preferred_time ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-700 whitespace-nowrap">
                   {row.alternative_date ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-700 whitespace-nowrap">
                   {row.alternative_time ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-700 dark:text-zinc-300">
+                <td className="px-4 py-3 text-zinc-700">
                   {row.firm_name ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-zinc-500 dark:text-zinc-400 whitespace-nowrap">
+                <td className="px-4 py-3 text-zinc-500 whitespace-nowrap">
                   {formatDate(row.created_at)}
                 </td>
               </tr>
@@ -141,7 +141,7 @@ function CardList({
 }) {
   if (rows.length === 0) {
     return (
-      <p className="text-zinc-500 dark:text-zinc-400 text-center py-12">
+      <p className="text-zinc-500 text-center py-12">
         No meeting requests yet.
       </p>
     );
@@ -156,49 +156,49 @@ function CardList({
             key={row.id}
             className={`rounded-xl border p-4 transition-colors ${
               isNew
-                ? "border-crypto-cyan bg-crypto-cyan/10 dark:bg-crypto-cyan/15"
-                : "border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.03]"
+                ? "border-brand-300 bg-brand-50"
+                : "border-zinc-200 bg-white"
             }`}
           >
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <a
                 href={`mailto:${row.preferred_email}`}
-                className="font-medium text-crypto-cyan hover:underline"
+                className="font-medium text-brand-700 hover:underline"
               >
                 {row.preferred_email}
               </a>
-              <span className="text-xs text-zinc-500 dark:text-zinc-400">
+              <span className="text-xs text-zinc-500">
                 {formatDate(row.created_at)}
               </span>
             </div>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-sm">
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">Phone</dt>
-                <dd className="text-zinc-900 dark:text-white">
+                <dt className="text-zinc-500">Phone</dt>
+                <dd className="text-zinc-900">
                   {row.preferred_phone ?? "—"}
                 </dd>
               </div>
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">Name</dt>
-                <dd className="text-zinc-900 dark:text-white">
+                <dt className="text-zinc-500">Name</dt>
+                <dd className="text-zinc-900">
                   {row.firm_name ?? "—"}
                 </dd>
               </div>
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">
+                <dt className="text-zinc-500">
                   Preferred date / time
                 </dt>
-                <dd className="text-zinc-900 dark:text-white">
+                <dd className="text-zinc-900">
                   {[row.preferred_date, row.preferred_time]
                     .filter(Boolean)
                     .join(" at ") || "—"}
                 </dd>
               </div>
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">
+                <dt className="text-zinc-500">
                   Alternative date / time
                 </dt>
-                <dd className="text-zinc-900 dark:text-white">
+                <dd className="text-zinc-900">
                   {[row.alternative_date, row.alternative_time]
                     .filter(Boolean)
                     .join(" at ") || "—"}
@@ -335,8 +335,8 @@ export default function AdminDashboardPage() {
 
   if (authenticated === null || (authenticated && loading && data.length === 0)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-warm dark:bg-[#0a0a0f] p-4">
-        <div className="animate-pulse text-zinc-500 dark:text-zinc-400">
+      <div className="min-h-screen flex items-center justify-center bg-surface-page p-4">
+        <div className="animate-pulse text-zinc-500">
           Loading…
         </div>
       </div>
@@ -345,19 +345,19 @@ export default function AdminDashboardPage() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-warm dark:bg-[#0a0a0f] p-4">
-        <div className="w-full max-w-sm rounded-2xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/[0.03] p-6 shadow-lg">
-          <h1 className="font-serif text-xl font-semibold text-zinc-900 dark:text-white mb-2">
+      <div className="min-h-screen flex items-center justify-center bg-surface-page p-4">
+        <div className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-lg">
+          <h1 className="font-serif text-xl font-semibold text-zinc-900 mb-2">
             Admin sign in
           </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
+          <p className="text-sm text-zinc-500 mb-4">
             Enter the admin secret to view meeting requests.
           </p>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label
                 htmlFor="admin-secret"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+                className="block text-sm font-medium text-zinc-700 mb-1"
               >
                 Admin secret
               </label>
@@ -366,7 +366,7 @@ export default function AdminDashboardPage() {
                 type="password"
                 value={secret}
                 onChange={(e) => setSecret(e.target.value)}
-                className="w-full min-h-[44px] px-4 rounded-xl border border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 text-zinc-900 dark:text-white focus:ring-2 focus:ring-crypto-cyan focus:border-crypto-cyan"
+                className="w-full min-h-[44px] px-4 rounded-xl border border-zinc-200 bg-white text-zinc-900 focus:ring-2 focus:ring-brand-600 focus:border-brand-500"
                 placeholder="Secret"
                 autoComplete="current-password"
               />
@@ -378,7 +378,7 @@ export default function AdminDashboardPage() {
             )}
             <button
               type="submit"
-              className="w-full min-h-[44px] py-2 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-crypto-cyan"
+              className="w-full min-h-[44px] py-2 rounded-full font-semibold text-white bg-gradient-cta hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-brand-600"
             >
               Sign in
             </button>
@@ -389,26 +389,26 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-warm dark:bg-[#0a0a0f] text-zinc-800 dark:text-zinc-100">
-      <header className="sticky top-0 z-10 border-b border-zinc-200 dark:border-white/10 bg-white/90 dark:bg-[#0a0a0f]/90 backdrop-blur-xl">
+    <div className="min-h-screen bg-surface-page text-zinc-800">
+      <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white/90 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="font-serif text-lg font-semibold text-zinc-900 dark:text-white">
+            <h1 className="font-serif text-lg font-semibold text-zinc-900">
               Admin — Meeting requests
             </h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="text-sm text-zinc-500">
               All customer submissions. New entries are highlighted and trigger a
               notification sound.
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">
+            <span className="text-xs text-zinc-500">
               Auto-refresh every {POLL_INTERVAL_MS / 1000}s
             </span>
             <button
               type="button"
               onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-zinc-200 dark:border-white/10 rounded-lg hover:bg-zinc-50 dark:hover:bg-white/5"
+              className="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 border border-zinc-200 rounded-lg hover:bg-zinc-50"
             >
               Sign out
             </button>
@@ -419,7 +419,7 @@ export default function AdminDashboardPage() {
       <main className="mx-auto max-w-6xl px-4 sm:px-6 py-6">
         {fetchError && (
           <div
-            className="mb-4 p-4 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-300 text-sm"
+            className="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm"
             role="alert"
           >
             {fetchError}
@@ -427,7 +427,7 @@ export default function AdminDashboardPage() {
         )}
 
         {loading && data.length === 0 ? (
-          <p className="text-zinc-500 dark:text-zinc-400 py-8">Loading…</p>
+          <p className="text-zinc-500 py-8">Loading…</p>
         ) : (
           <>
             <div className="hidden md:block">
@@ -436,7 +436,7 @@ export default function AdminDashboardPage() {
             <div className="md:hidden">
               <CardList rows={data} highlightIds={highlightIds} />
             </div>
-            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-4 text-sm text-zinc-500">
               {data.length} request{data.length !== 1 ? "s" : ""} total
               {highlightIds.size > 0 &&
                 ` · ${highlightIds.size} new since you opened this page`}
