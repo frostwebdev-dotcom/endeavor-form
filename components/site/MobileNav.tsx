@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   CONTACT_PHONE_DISPLAY,
@@ -10,6 +11,10 @@ import {
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
   useEffect(() => {
     if (open) {
@@ -103,7 +108,12 @@ export default function MobileNav() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-center h-14 px-4 text-lg text-slate-800 hover:bg-slate-50 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                      className={`flex items-center h-14 px-4 text-lg rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+                        isActive(link.href)
+                          ? "bg-brand-50 text-brand-900 font-semibold"
+                          : "text-slate-800 hover:bg-slate-50"
+                      }`}
                     >
                       {link.label}
                     </Link>

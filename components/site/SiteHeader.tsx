@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Container from "@/components/ui/Container";
 import MobileNav from "./MobileNav";
 import {
@@ -9,6 +12,11 @@ import {
 } from "@/lib/site";
 
 export default function SiteHeader() {
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-nav">
       <Container>
@@ -38,7 +46,12 @@ export default function SiteHeader() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="inline-flex items-center h-10 px-3 rounded-md text-[0.975rem] font-medium text-slate-700 hover:text-brand-800 hover:bg-slate-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`inline-flex items-center h-10 px-3 rounded-md text-[0.975rem] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 ${
+                  isActive(link.href)
+                    ? "bg-brand-50 text-brand-900 shadow-[inset_0_0_0_1px_rgba(35,83,125,0.14)]"
+                    : "text-slate-700 hover:text-brand-800 hover:bg-slate-50"
+                }`}
               >
                 {link.label}
               </Link>

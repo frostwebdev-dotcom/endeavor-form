@@ -32,6 +32,31 @@ const WHY_POINTS = [
   },
 ];
 
+const TRUST_PROMISES = [
+  "Confidential by default",
+  "Senior-led conversations",
+  "Personally reviewed inquiries",
+  "No pressure, no bulk outreach",
+];
+
+const FIRST_CALL_STEPS = [
+  {
+    title: "Share what matters most",
+    body:
+      "Tell us what you want more of and what you want to avoid. We listen first so the conversation starts with your priorities.",
+  },
+  {
+    title: "Get a clear outside perspective",
+    body:
+      "We help you compare paths, firms, and business models in plain language so you can think clearly about what actually fits.",
+  },
+  {
+    title: "Move only if the fit is right",
+    body:
+      "If there is a strong next step, we guide it. If there is not, you still leave with more clarity than you started with.",
+  },
+];
+
 export default function HomePage() {
   return (
     <>
@@ -39,6 +64,35 @@ export default function HomePage() {
         eyebrow="Endeavor Search Partners"
         title="Guiding successful financial advisors through the most important decisions of their career."
         lead="We take time to understand what matters to you, evaluate strong options, make thoughtful introductions, and help you navigate negotiations—so you can stay focused on your practice and the clients you serve."
+        aside={
+          <div className="rounded-3xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-card">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
+              What advisors value
+            </p>
+            <ul className="mt-5 space-y-4">
+              {WHY_POINTS.slice(0, 3).map((point) => (
+                <li
+                  key={point.title}
+                  className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4"
+                >
+                  <p className="font-serif text-lg font-semibold text-slate-900">
+                    {point.title}
+                  </p>
+                  <p className="mt-2 text-slate-700 leading-relaxed">
+                    {point.body}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 rounded-2xl bg-brand-950 px-5 py-4 text-white">
+              <p className="font-semibold">One conversation can save weeks.</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-200">
+                We help narrow the field early so you spend time only on options
+                worth serious consideration.
+              </p>
+            </div>
+          </div>
+        }
       >
         <div className="flex flex-col sm:flex-row gap-3">
           <LinkButton href="/contact">Request a confidential callback</LinkButton>
@@ -54,6 +108,100 @@ export default function HomePage() {
         </p>
       </PageHero>
 
+      <section className="bg-white border-b border-slate-200" aria-label="Trust signals">
+        <Container>
+          <ul className="grid gap-3 py-6 sm:grid-cols-2 lg:grid-cols-4">
+            {TRUST_PROMISES.map((item) => (
+              <li
+                key={item}
+                className="flex min-h-[64px] items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800 shadow-soft"
+              >
+                <span
+                  aria-hidden
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-700"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </span>
+                <span className="font-medium">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <Section
+        id="first-conversation"
+        eyebrow="A better first step"
+        title="If you're exploring change, this is where to begin."
+        lead="A thoughtful first conversation should lower pressure, not raise it. We make the path easier to understand before you commit time to any firm."
+        tone="muted"
+      >
+        <div className="grid gap-6 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <ol className="space-y-4">
+              {FIRST_CALL_STEPS.map((step, index) => (
+                <li
+                  key={step.title}
+                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
+                >
+                  <div className="flex items-start gap-4">
+                    <span
+                      aria-hidden
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 font-serif font-semibold text-brand-800"
+                    >
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-serif text-xl font-semibold text-slate-900">
+                        {step.title}
+                      </h3>
+                      <p className="mt-3 text-slate-700 leading-relaxed">
+                        {step.body}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="lg:col-span-5">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-card">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
+                Typical concerns we hear
+              </p>
+              <ul className="mt-5 space-y-3 text-slate-700">
+                <li className="rounded-xl bg-slate-50 px-4 py-3">
+                  "I want a better fit, but I do not want disruption for clients."
+                </li>
+                <li className="rounded-xl bg-slate-50 px-4 py-3">
+                  "I need honest help comparing options, not a pitch."
+                </li>
+                <li className="rounded-xl bg-slate-50 px-4 py-3">
+                  "I do not have time for a process that goes nowhere."
+                </li>
+              </ul>
+              <div className="mt-6">
+                <LinkButton href="/contact" className="w-full sm:w-auto">
+                  Schedule a conversation
+                </LinkButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
       {/* Pillars */}
       <Section
         id="pillars"
@@ -66,11 +214,19 @@ export default function HomePage() {
           {PROCESS_PHASES.map((p) => (
             <li
               key={p.slug}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft transition-transform hover:-translate-y-0.5"
             >
-              <p className="font-serif text-xs font-semibold tracking-[0.2em] uppercase text-brand-700">
-                Step {p.step}
-              </p>
+              <div className="flex items-center justify-between gap-4">
+                <p className="font-serif text-xs font-semibold tracking-[0.2em] uppercase text-brand-700">
+                  Step {p.step}
+                </p>
+                <span
+                  aria-hidden
+                  className="font-serif text-3xl text-brand-200"
+                >
+                  {p.step}
+                </span>
+              </div>
               <h3 className="mt-2 font-serif text-xl font-semibold text-slate-900">
                 {p.title}
               </h3>
@@ -126,6 +282,11 @@ export default function HomePage() {
                 {s.title}
               </h3>
               <p className="mt-3 text-slate-700 leading-relaxed">{s.summary}</p>
+              <div className="mt-5">
+                <Link href={`/services#${s.slug}`} className="inline-link text-sm">
+                  Learn more
+                </Link>
+              </div>
             </li>
           ))}
         </ul>
@@ -178,6 +339,7 @@ export default function HomePage() {
         id="faq-preview"
         eyebrow="Common questions"
         title="Clarity before the conversation"
+        lead="Clear answers help people feel comfortable taking the next step."
         tone="paper"
       >
         <dl className="grid gap-6 md:grid-cols-2">

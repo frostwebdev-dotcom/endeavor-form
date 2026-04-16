@@ -27,6 +27,39 @@ export default function SiteFooter() {
   return (
     <footer className="bg-white border-t border-slate-200">
       <Container>
+        <div className="pt-12">
+          <div className="rounded-3xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-8 sm:py-10 shadow-soft">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
+                  Confidential conversation
+                </p>
+                <h2 className="mt-3 font-serif text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
+                  When you are ready, we are here to help you think clearly.
+                </h2>
+                <p className="mt-3 text-slate-700 leading-relaxed">
+                  Reach out by phone or email, or request a callback. We review
+                  every inquiry personally.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center min-h-[48px] rounded-md bg-gradient-cta px-5 text-white font-semibold shadow-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                >
+                  Request a callback
+                </Link>
+                <a
+                  href={`tel:${CONTACT_PHONE_TEL}`}
+                  className="inline-flex items-center justify-center min-h-[48px] rounded-md border border-slate-300 bg-white px-5 text-slate-900 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600 focus-visible:ring-offset-2"
+                >
+                  Call {CONTACT_PHONE_DISPLAY}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="py-14 grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="font-serif text-xl font-semibold text-slate-900">
