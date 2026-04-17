@@ -210,31 +210,60 @@ export default function HomePage() {
         lead="A disciplined process built for financial advisors who expect discretion, judgment, and follow-through at every stage."
         tone="paper"
       >
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {PROCESS_PHASES.map((p) => (
-            <li
-              key={p.slug}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft transition-transform hover:-translate-y-0.5"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <p className="font-serif text-xs font-semibold tracking-[0.2em] uppercase text-brand-700">
-                  Step {p.step}
-                </p>
-                <span
-                  aria-hidden
-                  className="font-serif text-3xl text-brand-200"
+        <div className="relative overflow-hidden process-fade-edges">
+          <div className="process-marquee">
+            <ul className="process-track">
+              {PROCESS_PHASES.map((p) => (
+                <li
+                  key={`first-${p.slug}`}
+                  className="w-[min(82vw,20rem)] rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
                 >
-                  {p.step}
-                </span>
-              </div>
-              <h3 className="mt-2 font-serif text-xl font-semibold text-slate-900">
-                {p.title}
-              </h3>
-              <p className="mt-1 text-slate-800 font-medium">{p.lead}</p>
-              <p className="mt-3 text-slate-700 leading-relaxed">{p.body}</p>
-            </li>
-          ))}
-        </ul>
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="font-serif text-xs font-semibold tracking-[0.2em] uppercase text-brand-700">
+                      Step {p.step}
+                    </p>
+                    <span
+                      aria-hidden
+                      className="font-serif text-3xl text-brand-200"
+                    >
+                      {p.step}
+                    </span>
+                  </div>
+                  <h3 className="mt-2 font-serif text-xl font-semibold text-slate-900">
+                    {p.title}
+                  </h3>
+                  <p className="mt-1 text-slate-800 font-medium">{p.lead}</p>
+                  <p className="mt-3 text-slate-700 leading-relaxed">{p.body}</p>
+                </li>
+              ))}
+            </ul>
+            <ul className="process-track" aria-hidden="true">
+              {PROCESS_PHASES.map((p) => (
+                <li
+                  key={`second-${p.slug}`}
+                  className="w-[min(82vw,20rem)] rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="font-serif text-xs font-semibold tracking-[0.2em] uppercase text-brand-700">
+                      Step {p.step}
+                    </p>
+                    <span
+                      aria-hidden
+                      className="font-serif text-3xl text-brand-200"
+                    >
+                      {p.step}
+                    </span>
+                  </div>
+                  <h3 className="mt-2 font-serif text-xl font-semibold text-slate-900">
+                    {p.title}
+                  </h3>
+                  <p className="mt-1 text-slate-800 font-medium">{p.lead}</p>
+                  <p className="mt-3 text-slate-700 leading-relaxed">{p.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
         <div className="mt-10">
           <Link href="/process" className="inline-link text-base">
             Read more about our process →

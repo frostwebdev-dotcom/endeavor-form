@@ -70,6 +70,47 @@ main ol {
   color: #23537d;
 }
 
+/* Seamless right-to-left cycling for process cards. */
+.process-fade-edges {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+.process-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: process-marquee-right 34s linear infinite;
+}
+
+.process-track {
+  display: flex;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+  flex-shrink: 0;
+}
+
+@keyframes process-marquee-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Visible, high-contrast keyboard focus for every interactive element. */
 *:focus {
   outline: none;
@@ -154,5 +195,9 @@ a.inline-link:hover,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .process-marquee {
+    animation: none !important;
   }
 }
