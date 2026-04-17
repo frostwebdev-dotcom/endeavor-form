@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
-import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { LinkButton } from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
+import HeroCarousel from "@/components/site/HeroCarousel";
 import { PROCESS_PHASES } from "@/lib/content/process";
 import { SERVICES } from "@/lib/content/services";
 import { LEADERSHIP } from "@/lib/content/team";
@@ -62,59 +62,7 @@ const FIRST_CALL_STEPS = [
 export default function HomePage() {
   return (
     <>
-      <PageHero
-        eyebrow="Endeavor Search Partners"
-        title="Guiding successful financial advisors through the most important decisions of their career."
-        lead="We take time to understand what matters to you, evaluate strong options, make thoughtful introductions, and help you navigate negotiations—so you can stay focused on your practice and the clients you serve."
-        aside={
-          <Reveal
-            direction="right"
-            delayMs={120}
-            className="rounded-3xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-card"
-          >
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
-              What advisors value
-            </p>
-            <ul className="mt-5 space-y-4">
-              {WHY_POINTS.slice(0, 3).map((point, index) => (
-                <Reveal
-                  as="li"
-                  key={point.title}
-                  delayMs={220 + index * 90}
-                  className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4"
-                >
-                  <p className="font-serif text-lg font-semibold text-slate-900">
-                    {point.title}
-                  </p>
-                  <p className="mt-2 text-slate-700 leading-relaxed">
-                    {point.body}
-                  </p>
-                </Reveal>
-              ))}
-            </ul>
-            <div className="mt-6 rounded-2xl bg-brand-950 px-5 py-4 text-white">
-              <p className="font-semibold">One conversation can save weeks.</p>
-              <p className="mt-1 text-sm leading-relaxed text-slate-200">
-                We help narrow the field early so you spend time only on options
-                worth serious consideration.
-              </p>
-            </div>
-          </Reveal>
-        }
-      >
-        <Reveal className="flex flex-col sm:flex-row gap-3" delayMs={70}>
-          <LinkButton href="/contact">Request a confidential callback</LinkButton>
-          <LinkButton href="/process" variant="secondary">
-            See how it works
-          </LinkButton>
-        </Reveal>
-        <Reveal className="mt-6 text-sm text-slate-600" delayMs={150}>
-          Prefer to talk first?{" "}
-          <a className="inline-link" href={`tel:${CONTACT_PHONE_TEL}`}>
-            Call {CONTACT_PHONE_DISPLAY}
-          </a>
-        </Reveal>
-      </PageHero>
+      <HeroCarousel />
 
       <section className="bg-white border-b border-slate-200" aria-label="Trust signals">
         <Container>
