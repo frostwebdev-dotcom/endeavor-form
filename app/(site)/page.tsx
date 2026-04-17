@@ -3,6 +3,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { LinkButton } from "@/components/ui/Button";
+import Reveal from "@/components/ui/Reveal";
 import { PROCESS_PHASES } from "@/lib/content/process";
 import { SERVICES } from "@/lib/content/services";
 import { LEADERSHIP } from "@/lib/content/team";
@@ -65,14 +66,20 @@ export default function HomePage() {
         title="Guiding successful financial advisors through the most important decisions of their career."
         lead="We take time to understand what matters to you, evaluate strong options, make thoughtful introductions, and help you navigate negotiations—so you can stay focused on your practice and the clients you serve."
         aside={
-          <div className="rounded-3xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-card">
+          <Reveal
+            direction="right"
+            delayMs={120}
+            className="rounded-3xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-card"
+          >
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
               What advisors value
             </p>
             <ul className="mt-5 space-y-4">
-              {WHY_POINTS.slice(0, 3).map((point) => (
-                <li
+              {WHY_POINTS.slice(0, 3).map((point, index) => (
+                <Reveal
+                  as="li"
                   key={point.title}
+                  delayMs={220 + index * 90}
                   className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4"
                 >
                   <p className="font-serif text-lg font-semibold text-slate-900">
@@ -81,7 +88,7 @@ export default function HomePage() {
                   <p className="mt-2 text-slate-700 leading-relaxed">
                     {point.body}
                   </p>
-                </li>
+                </Reveal>
               ))}
             </ul>
             <div className="mt-6 rounded-2xl bg-brand-950 px-5 py-4 text-white">
@@ -91,29 +98,31 @@ export default function HomePage() {
                 worth serious consideration.
               </p>
             </div>
-          </div>
+          </Reveal>
         }
       >
-        <div className="flex flex-col sm:flex-row gap-3">
+        <Reveal className="flex flex-col sm:flex-row gap-3" delayMs={70}>
           <LinkButton href="/contact">Request a confidential callback</LinkButton>
           <LinkButton href="/process" variant="secondary">
             See how it works
           </LinkButton>
-        </div>
-        <p className="mt-6 text-sm text-slate-600">
+        </Reveal>
+        <Reveal className="mt-6 text-sm text-slate-600" delayMs={150}>
           Prefer to talk first?{" "}
           <a className="inline-link" href={`tel:${CONTACT_PHONE_TEL}`}>
             Call {CONTACT_PHONE_DISPLAY}
           </a>
-        </p>
+        </Reveal>
       </PageHero>
 
       <section className="bg-white border-b border-slate-200" aria-label="Trust signals">
         <Container>
           <ul className="grid gap-3 py-6 sm:grid-cols-2 lg:grid-cols-4">
-            {TRUST_PROMISES.map((item) => (
-              <li
+            {TRUST_PROMISES.map((item, index) => (
+              <Reveal
+                as="li"
                 key={item}
+                delayMs={index * 70}
                 className="flex min-h-[64px] items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800 shadow-soft"
               >
                 <span
@@ -135,7 +144,7 @@ export default function HomePage() {
                   </svg>
                 </span>
                 <span className="font-medium">{item}</span>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </Container>
@@ -149,11 +158,13 @@ export default function HomePage() {
         tone="muted"
       >
         <div className="grid gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <Reveal className="lg:col-span-7" direction="left">
             <ol className="space-y-4">
               {FIRST_CALL_STEPS.map((step, index) => (
-                <li
+                <Reveal
+                  as="li"
                   key={step.title}
+                  delayMs={index * 90}
                   className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
                 >
                   <div className="flex items-start gap-4">
@@ -172,11 +183,11 @@ export default function HomePage() {
                       </p>
                     </div>
                   </div>
-                </li>
+                </Reveal>
               ))}
             </ol>
-          </div>
-          <div className="lg:col-span-5">
+          </Reveal>
+          <Reveal className="lg:col-span-5" direction="right" delayMs={120}>
             <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-card">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
                 Typical concerns we hear
@@ -198,7 +209,7 @@ export default function HomePage() {
                 </LinkButton>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </Section>
 
@@ -210,7 +221,7 @@ export default function HomePage() {
         lead="A disciplined process built for financial advisors who expect discretion, judgment, and follow-through at every stage."
         tone="paper"
       >
-        <div className="relative overflow-hidden process-fade-edges">
+        <Reveal className="relative overflow-hidden process-fade-edges">
           <div className="process-marquee">
             <ul className="process-track">
               {PROCESS_PHASES.map((p) => (
@@ -263,7 +274,7 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-        </div>
+        </Reveal>
         <div className="mt-10">
           <Link href="/process" className="inline-link text-base">
             Read more about our process →
@@ -279,16 +290,18 @@ export default function HomePage() {
         lead="Our job is to make your decision easier—whatever you ultimately decide."
       >
         <ul className="grid gap-6 sm:grid-cols-2">
-          {WHY_POINTS.map((point) => (
-            <li
+          {WHY_POINTS.map((point, index) => (
+            <Reveal
+              as="li"
               key={point.title}
+              delayMs={index * 85}
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
             >
               <h3 className="font-serif text-lg font-semibold text-slate-900">
                 {point.title}
               </h3>
               <p className="mt-3 text-slate-700 leading-relaxed">{point.body}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -302,9 +315,11 @@ export default function HomePage() {
         tone="paper"
       >
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {SERVICES.map((s) => (
-            <li
+          {SERVICES.map((s, index) => (
+            <Reveal
+              as="li"
               key={s.slug}
+              delayMs={index * 75}
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
             >
               <h3 className="font-serif text-lg font-semibold text-slate-900">
@@ -316,7 +331,7 @@ export default function HomePage() {
                   Learn more
                 </Link>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ul>
         <div className="mt-10">
@@ -334,9 +349,11 @@ export default function HomePage() {
         lead="Our partners have spent years helping advisors evaluate options, navigate transitions, and negotiate aligned outcomes."
       >
         <ul className="grid gap-6 sm:grid-cols-3">
-          {LEADERSHIP.map((m) => (
-            <li
+          {LEADERSHIP.map((m, index) => (
+            <Reveal
+              as="li"
               key={m.name}
+              delayMs={index * 90}
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
             >
               <div className="flex items-center gap-4">
@@ -353,7 +370,7 @@ export default function HomePage() {
                   <p className="text-slate-700">{m.role}</p>
                 </div>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ul>
         <div className="mt-10">
@@ -372,16 +389,17 @@ export default function HomePage() {
         tone="paper"
       >
         <dl className="grid gap-6 md:grid-cols-2">
-          {FAQS.slice(0, 4).map((f) => (
-            <div
+          {FAQS.slice(0, 4).map((f, index) => (
+            <Reveal
               key={f.q}
+              delayMs={index * 90}
               className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
             >
               <dt className="font-serif text-lg font-semibold text-slate-900">
                 {f.q}
               </dt>
               <dd className="mt-3 text-slate-700 leading-relaxed">{f.a}</dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
         <div className="mt-10">
@@ -397,7 +415,7 @@ export default function HomePage() {
         aria-labelledby="home-cta-heading"
       >
         <Container narrow>
-          <div className="text-center">
+          <Reveal className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
               Next step
             </p>
@@ -422,7 +440,7 @@ export default function HomePage() {
                 Or call {CONTACT_PHONE_DISPLAY}
               </LinkButton>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </section>
     </>
