@@ -111,10 +111,30 @@ main ol {
   }
 }
 
-/* Hero carousel progress bar: fills across the autoplay duration (6.5s). */
+/* Trust-signals marquee (shorter list, faster loop). */
+.trust-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: process-marquee-right 32s linear infinite;
+}
+
+.trust-marquee:hover,
+.trust-marquee:focus-within {
+  animation-play-state: paused;
+}
+
+.trust-track {
+  display: flex;
+  gap: 0.75rem;
+  padding-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Hero carousel progress bar: fills across the autoplay duration (4.5s). */
 .hero-progress-bar {
   width: 0%;
-  animation: hero-progress 6500ms linear forwards;
+  animation: hero-progress 4500ms linear forwards;
 }
 
 @keyframes hero-progress {
@@ -212,7 +232,8 @@ a.inline-link:hover,
     scroll-behavior: auto !important;
   }
 
-  .process-marquee {
+  .process-marquee,
+  .trust-marquee {
     animation: none !important;
   }
 

@@ -34,12 +34,77 @@ const WHY_POINTS = [
   },
 ];
 
-const TRUST_PROMISES = [
-  "Confidential by default",
-  "Senior-led conversations",
-  "Personally reviewed inquiries",
-  "No pressure, no bulk outreach",
+type TrustIconKey =
+  | "confidential"
+  | "seniorLed"
+  | "personallyReviewed"
+  | "noPressure";
+
+const TRUST_PROMISES: { label: string; icon: TrustIconKey }[] = [
+  { label: "Confidential by default", icon: "confidential" },
+  { label: "Senior-led conversations", icon: "seniorLed" },
+  { label: "Personally reviewed inquiries", icon: "personallyReviewed" },
+  { label: "No pressure, no bulk outreach", icon: "noPressure" },
 ];
+
+function TrustIcon({ name }: { name: TrustIconKey }) {
+  const common = {
+    className: "h-5 w-5",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  switch (name) {
+    case "confidential":
+      return (
+        <svg {...common}>
+          <path d="M12 3l8 3v5c0 4.5-3.2 8.5-8 10-4.8-1.5-8-5.5-8-10V6l8-3z" />
+          <path d="M9.5 12.5l2 2 3-4" />
+        </svg>
+      );
+    case "seniorLed":
+      return (
+        <svg {...common}>
+          <path d="M4 6h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9l-3 3v-3H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
+          <path d="M20 10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2v3l-3-3" />
+        </svg>
+      );
+    case "personallyReviewed":
+      return (
+        <svg {...common}>
+          <path d="M8 3h7l4 4v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+          <path d="M14 3v5h5" />
+          <path d="M9 14l2 2 4-4" />
+        </svg>
+      );
+    case "noPressure":
+      return (
+        <svg {...common}>
+          <circle cx="9" cy="8" r="3" />
+          <path d="M3 20c.6-2.8 3-4.5 6-4.5s5.4 1.7 6 4.5" />
+          <path d="M15 6l6 6" />
+          <path d="M21 6l-6 6" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+function TrustItem({ item }: { item: (typeof TRUST_PROMISES)[number] }) {
+  return (
+    <li className="flex min-h-[64px] w-[260px] sm:w-[280px] items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800 shadow-soft">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+        <TrustIcon name={item.icon} />
+      </span>
+      <span className="font-medium leading-snug">{item.label}</span>
+    </li>
+  );
+}
 
 const FIRST_CALL_STEPS = [
   {
@@ -64,39 +129,30 @@ export default function HomePage() {
     <>
       <HeroCarousel />
 
-      <section className="bg-white border-b border-slate-200" aria-label="Trust signals">
-        <Container>
-          <ul className="grid gap-3 py-6 sm:grid-cols-2 lg:grid-cols-4">
-            {TRUST_PROMISES.map((item, index) => (
-              <Reveal
-                as="li"
-                key={item}
-                delayMs={index * 70}
-                className="flex min-h-[64px] items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800 shadow-soft"
-              >
-                <span
-                  aria-hidden
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-brand-700"
-                >
-                  <svg
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </span>
-                <span className="font-medium">{item}</span>
-              </Reveal>
-            ))}
-          </ul>
-        </Container>
+      <section
+        className="bg-white border-b border-slate-200 py-6"
+        aria-label="Trust signals"
+      >
+        <div className="relative overflow-hidden process-fade-edges">
+          <div className="trust-marquee">
+            <ul className="trust-track" role="list">
+              {TRUST_PROMISES.map((item) => (
+                <TrustItem key={`a-${item.label}`} item={item} />
+              ))}
+              {TRUST_PROMISES.map((item) => (
+                <TrustItem key={`b-${item.label}`} item={item} />
+              ))}
+            </ul>
+            <ul className="trust-track" aria-hidden="true">
+              {TRUST_PROMISES.map((item) => (
+                <TrustItem key={`c-${item.label}`} item={item} />
+              ))}
+              {TRUST_PROMISES.map((item) => (
+                <TrustItem key={`d-${item.label}`} item={item} />
+              ))}
+            </ul>
+          </div>
+        </div>
       </section>
 
       <Section

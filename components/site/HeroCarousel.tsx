@@ -93,10 +93,12 @@ const FRAMES: Frame[] = [
   },
 ];
 
-const AUTOPLAY_MS = 6500;
+const AUTOPLAY_MS = 4500;
+const TRANSITION_MS = 650;
 
 export default function HeroCarousel() {
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState(0);
   const [paused, setPaused] = useState(false);
   const regionRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useRef(false);
@@ -116,14 +118,20 @@ export default function HeroCarousel() {
     if (paused) return;
     if (prefersReducedMotion.current) return;
     const id = window.setTimeout(() => {
+      setPrev(active);
       setActive((i) => (i + 1) % FRAMES.length);
     }, AUTOPLAY_MS);
     return () => window.clearTimeout(id);
   }, [active, paused]);
 
-  const goTo = useCallback((i: number) => {
-    setActive(((i % FRAMES.length) + FRAMES.length) % FRAMES.length);
-  }, []);
+  const goTo = useCallback(
+    (i: number) => {
+      const next = ((i % FRAMES.length) + FRAMES.length) % FRAMES.length;
+      setPrev(active);
+      setActive(next);
+    },
+    [active]
+  );
 
   const onKey = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
@@ -163,12 +171,19 @@ export default function HeroCarousel() {
           <div className="lg:col-span-7 min-h-[360px] sm:min-h-[400px] lg:min-h-[440px] relative">
             <div
               ref={regionRef}
-              className="relative"
+              className="relative overflow-hidden"
               aria-live="polite"
               aria-atomic="true"
             >
               {FRAMES.map((f, i) => (
-                <FrameText key={i} frame={f} active={i === active} isTitle={i === active} />
+                <FrameText
+                  key={i}
+                  frame={f}
+                  active={i === active}
+                  wasPrev={i === prev && i !== active}
+                  direction={getDirection(prev, active, FRAMES.length)}
+                  isTitle={i === active}
+                />
               ))}
             </div>
 
@@ -193,9 +208,15 @@ export default function HeroCarousel() {
 
           {/* Right: sliding aside card */}
           <div className="lg:col-span-5">
-            <div className="relative min-h-[260px] sm:min-h-[300px]">
+            <div className="relative min-h-[260px] sm:min-h-[300px] overflow-hidden">
               {FRAMES.map((f, i) => (
-                <FrameAside key={i} frame={f} active={i === active} />
+                <FrameAside
+                  key={i}
+                  frame={f}
+                  active={i === active}
+                  wasPrev={i === prev && i !== active}
+                  direction={getDirection(prev, active, FRAMES.length)}
+                />
               ))}
             </div>
 
@@ -297,22 +318,60 @@ export default function HeroCarousel() {
   );
 }
 
+type SlideDirection = 1 | -1;
+
+/**
+ * Shortest-path direction between two indices on a ring of length n.
+ * Returns 1 when moving forward (next enters from right), -1 when moving back.
+ */
+function getDirection(from: number, to: number, n: number): SlideDirection {
+  if (from === to) return 1;
+  const forward = (to - from + n) % n;
+  const backward = (from - to + n) % n;
+  return forward <= backward ? 1 : -1;
+}
+
+const SLIDE_ENTER_FROM = "translate-x-16 opacity-0";
+const SLIDE_EXIT_TO = "-translate-x-16 opacity-0";
+const SLIDE_ENTER_FROM_REVERSE = "-translate-x-16 opacity-0";
+const SLIDE_EXIT_TO_REVERSE = "translate-x-16 opacity-0";
+const SLIDE_ACTIVE = "translate-x-0 opacity-100";
+const TRANSITION_CLASSES =
+  "transition-[opacity,transform] ease-[cubic-bezier(0.22,0.61,0.36,1)] will-change-transform";
+
+function slideClassFor(
+  active: boolean,
+  wasPrev: boolean,
+  direction: SlideDirection
+): string {
+  if (active) return SLIDE_ACTIVE;
+  if (wasPrev) {
+    return direction === 1 ? SLIDE_EXIT_TO : SLIDE_EXIT_TO_REVERSE;
+  }
+  return direction === 1 ? SLIDE_ENTER_FROM : SLIDE_ENTER_FROM_REVERSE;
+}
+
 function FrameText({
   frame,
   active,
+  wasPrev,
+  direction,
   isTitle,
 }: {
   frame: Frame;
   active: boolean;
+  wasPrev: boolean;
+  direction: SlideDirection;
   isTitle: boolean;
 }) {
   return (
     <div
-      className={`transition-[opacity,transform] duration-[900ms] ease-out ${
+      className={`${TRANSITION_CLASSES} ${slideClassFor(active, wasPrev, direction)} ${
         active
-          ? "opacity-100 translate-x-0 pointer-events-auto relative"
-          : "opacity-0 translate-x-4 pointer-events-none absolute inset-0"
+          ? "pointer-events-auto relative"
+          : "pointer-events-none absolute inset-0"
       }`}
+      style={{ transitionDuration: `${TRANSITION_MS}ms` }}
       aria-hidden={!active}
     >
       <p className="ui-kicker">{frame.kicker}</p>
@@ -335,14 +394,25 @@ function FrameText({
   );
 }
 
-function FrameAside({ frame, active }: { frame: Frame; active: boolean }) {
+function FrameAside({
+  frame,
+  active,
+  wasPrev,
+  direction,
+}: {
+  frame: Frame;
+  active: boolean;
+  wasPrev: boolean;
+  direction: SlideDirection;
+}) {
   return (
     <div
-      className={`transition-[opacity,transform] duration-[900ms] ease-out ${
+      className={`${TRANSITION_CLASSES} ${slideClassFor(active, wasPrev, direction)} ${
         active
-          ? "opacity-100 translate-x-0 pointer-events-auto relative"
-          : "opacity-0 -translate-x-4 pointer-events-none absolute inset-0"
+          ? "pointer-events-auto relative"
+          : "pointer-events-none absolute inset-0"
       }`}
+      style={{ transitionDuration: `${TRANSITION_MS}ms` }}
       aria-hidden={!active}
     >
       <div className="relative rounded-3xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-card">
