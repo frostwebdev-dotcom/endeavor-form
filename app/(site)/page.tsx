@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
@@ -354,21 +355,33 @@ export default function HomePage() {
               as="li"
               key={m.name}
               delayMs={index * 90}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft"
+              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"
             >
-              <div className="flex items-center gap-4">
-                <span
-                  aria-hidden
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-cta text-white font-serif font-semibold"
-                >
-                  {m.initials}
-                </span>
-                <div>
-                  <p className="font-serif text-lg font-semibold text-slate-900">
-                    {m.name}
-                  </p>
-                  <p className="text-slate-700">{m.role}</p>
+              {m.photo ? (
+                <div className="relative aspect-[3/4] w-full bg-slate-100">
+                  <Image
+                    src={m.photo}
+                    alt={`${m.name}, ${m.role}`}
+                    fill
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-contain object-center"
+                  />
                 </div>
+              ) : (
+                <div className="flex aspect-[3/4] w-full items-center justify-center bg-slate-50">
+                  <span
+                    aria-hidden
+                    className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-cta text-white font-serif text-xl font-semibold"
+                  >
+                    {m.initials}
+                  </span>
+                </div>
+              )}
+              <div className="flex flex-col gap-1 p-6">
+                <p className="font-serif text-lg font-semibold text-slate-900">
+                  {m.name}
+                </p>
+                <p className="text-slate-700">{m.role}</p>
               </div>
             </Reveal>
           ))}

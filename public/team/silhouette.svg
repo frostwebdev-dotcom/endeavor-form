@@ -1,0 +1,25 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 300 400"
+  role="img"
+  aria-label="Team member silhouette"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eef3f8" />
+      <stop offset="100%" stop-color="#d9e3ee" />
+    </linearGradient>
+    <linearGradient id="figure" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8ba3bd" />
+      <stop offset="100%" stop-color="#5e7791" />
+    </linearGradient>
+  </defs>
+
+  <rect width="300" height="400" fill="url(#bg)" />
+
+  <g fill="url(#figure)">
+    <circle cx="150" cy="150" r="56" />
+    <path d="M58 400c0-55 41-100 92-100s92 45 92 100H58z" />
+  </g>
+</svg>

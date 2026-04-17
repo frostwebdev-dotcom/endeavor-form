@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { LinkButton } from "@/components/ui/Button";
@@ -20,28 +21,41 @@ export const metadata: Metadata = {
 
 function MemberCard({ m, featured }: { m: TeamMember; featured?: boolean }) {
   return (
-    <li className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
-      <div className="flex items-start gap-4">
-        <span
-          aria-hidden
-          className={`flex h-14 w-14 items-center justify-center rounded-full font-serif font-semibold shrink-0 ${
-            featured
-              ? "bg-gradient-cta text-white text-base"
-              : "bg-brand-50 text-brand-800 text-base border border-brand-100"
-          }`}
-        >
-          {m.initials}
-        </span>
-        <div className="min-w-0">
-          <p className="font-serif text-lg sm:text-xl font-semibold text-slate-900">
-            {m.name}
-          </p>
-          <p className="text-slate-700">{m.role}</p>
+    <li className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
+      {m.photo ? (
+        <div className="relative aspect-[3/4] w-full bg-slate-100">
+          <Image
+            src={m.photo}
+            alt={`${m.name}, ${m.role}`}
+            fill
+            sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+            className="object-contain object-center"
+            priority={featured}
+          />
         </div>
-      </div>
-      {m.bio && (
-        <p className="mt-5 text-slate-700 leading-relaxed">{m.bio}</p>
+      ) : (
+        <div className="flex aspect-[3/4] w-full items-center justify-center bg-slate-50">
+          <span
+            aria-hidden
+            className={`flex h-20 w-20 items-center justify-center rounded-full font-serif text-2xl font-semibold ${
+              featured
+                ? "bg-gradient-cta text-white"
+                : "border border-brand-100 bg-brand-50 text-brand-800"
+            }`}
+          >
+            {m.initials}
+          </span>
+        </div>
       )}
+      <div className="flex flex-col gap-2 p-6">
+        <p className="font-serif text-lg sm:text-xl font-semibold text-slate-900">
+          {m.name}
+        </p>
+        <p className="text-slate-700">{m.role}</p>
+        {m.bio && (
+          <p className="mt-3 text-slate-700 leading-relaxed">{m.bio}</p>
+        )}
+      </div>
     </li>
   );
 }

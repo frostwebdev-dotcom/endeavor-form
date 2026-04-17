@@ -92,7 +92,7 @@ main ol {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: process-marquee-right 34s linear infinite;
+  animation: process-marquee-right 48s linear infinite;
 }
 
 .process-track {
