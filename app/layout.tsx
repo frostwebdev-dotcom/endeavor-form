@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import SiteJsonLd from "@/components/seo/SiteJsonLd";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
@@ -7,13 +7,6 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-serif",
   display: "swap",
   weight: ["400", "500", "600", "700"],
 });
@@ -75,7 +68,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${sourceSerif.variable}`}>
+    <html lang="en" className={`${sourceSans.variable}`}>
       <body className="font-sans antialiased min-h-screen bg-surface-page text-slate-900 [color-scheme:light]">
         <SiteJsonLd />
         {children}

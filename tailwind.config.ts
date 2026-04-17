@@ -42,10 +42,11 @@ const config: Config = {
           "sans-serif",
         ],
         serif: [
-          "var(--font-serif)",
-          "Georgia",
-          "Times New Roman",
-          "serif",
+          "var(--font-sans)",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif",
         ],
       },
       maxWidth: {

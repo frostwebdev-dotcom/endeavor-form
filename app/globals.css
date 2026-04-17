@@ -24,10 +24,50 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.55;
+  line-height: 1.6;
+}
+
+/* Keep headings crisp, modern, and consistent site-wide. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+/* Improve body readability so content feels obvious at a glance. */
+main p,
+main li,
+main dd {
+  color: #334155;
+  line-height: 1.72;
+}
+
+main p + p {
+  margin-top: 0.7rem;
+}
+
+main ul,
+main ol {
+  margin-top: 0.45rem;
+}
+
+/* Emphasize key helper text labels used across cards/forms. */
+.ui-kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #23537d;
 }
 
 /* Visible, high-contrast keyboard focus for every interactive element. */
@@ -68,18 +108,18 @@ a.inline-link:hover,
   margin-top: 1rem;
 }
 .legal h2 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #0f172a;
   margin-top: 2.25rem;
   margin-bottom: 0.5rem;
   line-height: 1.3;
 }
 .legal h3 {
-  font-family: var(--font-serif), Georgia, serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 700;
   color: #0f172a;
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;

@@ -42,7 +42,7 @@ export default function Section({
         {(eyebrow || title || lead) && (
           <div className="max-w-3xl mb-10 sm:mb-14">
             {eyebrow && (
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
+              <p className="ui-kicker">
                 {eyebrow}
               </p>
             )}

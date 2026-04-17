@@ -34,7 +34,7 @@ export default function PageHero({
         >
           <div className={`${aside ? "lg:col-span-7" : "max-w-3xl"} ${alignClass}`}>
             {eyebrow && (
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">
+            <p className="ui-kicker">
                 {eyebrow}
               </p>
             )}
