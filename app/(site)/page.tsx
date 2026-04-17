@@ -49,11 +49,11 @@ const TRUST_PROMISES: { label: string; icon: TrustIconKey }[] = [
 
 function TrustIcon({ name }: { name: TrustIconKey }) {
   const common = {
-    className: "h-5 w-5",
+    className: "h-8 w-8",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: 1.8,
+    strokeWidth: 1.75,
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
     "aria-hidden": true,
@@ -97,8 +97,8 @@ function TrustIcon({ name }: { name: TrustIconKey }) {
 
 function TrustItem({ item }: { item: (typeof TRUST_PROMISES)[number] }) {
   return (
-    <li className="flex min-h-[64px] w-[260px] sm:w-[280px] items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800 shadow-soft">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700">
+    <li className="flex min-h-[80px] w-[280px] sm:w-[300px] items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-800 shadow-soft">
+      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-100">
         <TrustIcon name={item.icon} />
       </span>
       <span className="font-medium leading-snug">{item.label}</span>
